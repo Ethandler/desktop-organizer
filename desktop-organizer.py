@@ -7,10 +7,24 @@ CATEGORIES = {
     "Pictures": [".jpg", ".jpeg", ".png", ".gif", ".bmp", ".svg", ".tiff"],
     "Videos": [".mp4", ".mkv", ".mov", ".avi", ".flv", ".wmv"],
     "Music": [".mp3", ".wav", ".aac", ".flac", ".ogg", ".m4a"],
-    "Programs": [".exe", ".msi", ".bat", ".sh"],
+    "Programs": [],  # Non-game executables
+    "Games": [],  # Game executables
+    "Game_Launchers": [],  # Game launchers
+    "Mod_Launchers": [],  # Mod launchers
     "Compressed": [".zip", ".rar", ".tar", ".gz", ".7z"],
+    "AI_Design": [".ai", ".psd", ".blend", ".sketch", ".xd"],
     "Others": []  # Files not matching any category
 }
+
+# Define game launchers, mod launchers, and common games
+GAME_LAUNCHERS = [
+    "steam.exe", "epicgameslauncher.exe", "origin.exe", "battlenet.exe",
+    "uplay.exe", "goggalaxy.exe", "riotclientservices.exe"
+]
+MOD_LAUNCHERS = ["vortex.exe", "modorganizer.exe", "nexusmods.exe"]
+COMMON_GAMES = [
+    "minecraft.exe", "valorant.exe", "csgo.exe", "leagueoflegends.exe", "fortnite.exe"
+]
 
 def organize_desktop(directory):
     """
@@ -29,18 +43,34 @@ def organize_desktop(directory):
     for file in os.listdir(directory):
         file_path = os.path.join(directory, file)
 
-        # Skip directories (don't organize folders)
+        # Skip directories
         if os.path.isdir(file_path):
             continue
 
         # Determine the file's category
         file_ext = os.path.splitext(file)[1].lower()
+        file_name = file.lower()
         moved = False
-        for category, extensions in CATEGORIES.items():
-            if file_ext in extensions:
-                shutil.move(file_path, os.path.join(directory, category, file))
-                moved = True
-                break
+
+        # Categorize specific executable files
+        if file_name in GAME_LAUNCHERS:
+            shutil.move(file_path, os.path.join(directory, "Game_Launchers", file))
+            moved = True
+        elif file_name in MOD_LAUNCHERS:
+            shutil.move(file_path, os.path.join(directory, "Mod_Launchers", file))
+            moved = True
+        elif file_name in COMMON_GAMES:
+            shutil.move(file_path, os.path.join(directory, "Games", file))
+            moved = True
+        elif file_ext == ".exe":  # Remaining executables
+            shutil.move(file_path, os.path.join(directory, "Programs", file))
+            moved = True
+        else:
+            for category, extensions in CATEGORIES.items():
+                if file_ext in extensions:
+                    shutil.move(file_path, os.path.join(directory, category, file))
+                    moved = True
+                    break
 
         # If the file doesn't match any category, move to "Others"
         if not moved:
