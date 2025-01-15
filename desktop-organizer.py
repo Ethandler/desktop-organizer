@@ -26,14 +26,35 @@ COMMON_GAMES = [
     "minecraft.exe", "valorant.exe", "csgo.exe", "leagueoflegends.exe", "fortnite.exe"
 ]
 
+def reset_to_desktop(directory):
+    """
+    Moves all files back onto the desktop before reorganizing.
+    """
+    for folder in os.listdir(directory):
+        folder_path = os.path.join(directory, folder)
+
+        # Skip files and only process folders
+        if not os.path.isdir(folder_path):
+            continue
+
+        # Move all files inside the folder back to the desktop
+        for file in os.listdir(folder_path):
+            file_path = os.path.join(folder_path, file)
+            try:
+                shutil.move(file_path, directory)
+            except Exception as e:
+                print(f"Error moving {file} from {folder}: {e}")
+
+        # Remove the now-empty folder
+        try:
+            os.rmdir(folder_path)
+        except Exception as e:
+            print(f"Error removing folder {folder}: {e}")
+
 def organize_desktop(directory):
     """
     Organizes the desktop into categorized folders.
     """
-    if not os.path.exists(directory):
-        print(f"The directory '{directory}' does not exist!")
-        return
-
     # Create folders for categories
     for category in CATEGORIES:
         folder_path = os.path.join(directory, category)
@@ -86,6 +107,9 @@ if __name__ == "__main__":
     print(f"Organizing files on your desktop: {desktop_path}")
     proceed = input("Do you want to proceed? (yes/no): ").strip().lower()
     if proceed in ["yes", "y"]:
+        print("Resetting all files to the desktop...")
+        reset_to_desktop(desktop_path)
+        print("Reorganizing files into categories...")
         organize_desktop(desktop_path)
     else:
         print("Operation cancelled.")
