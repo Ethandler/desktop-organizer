@@ -1,0 +1,23 @@
+{
+    "categories": {
+        "Documents": {
+            "extensions": [".pdf", ".doc", ".docx", ".txt", ".xlsx", ".pptx"],
+            "color": "#4CAF50",
+            "icon": "📄"
+        },
+        "Media": {
+            "extensions": [".mp4", ".mov", ".avi", ".mp3", ".wav"],
+            "color": "#FF5722",
+            "icon": "🎵"
+        },
+        "Executables": {
+            "extensions": [".exe", ".msi"],
+            "color": "#2196F3",
+            "icon": "⚙️"
+        }
+    },
+    "executable_rules": {
+        "Games": ["minecraft", "steam", "riot"],
+        "Launchers": ["epic", "origin", "battlenet"]
+    }
+}

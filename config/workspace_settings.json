@@ -1,0 +1,17 @@
+{
+    "default": {
+        "categories": {
+            "Work": {
+                "color": "#4CAF50",
+                "icon": "💼",
+                "paths": ["Documents/Work", "Projects"]
+            },
+            "Personal": {
+                "color": "#2196F3",
+                "icon": "🏠",
+                "paths": ["Pictures", "Videos"]
+            }
+        },
+        "rules": ["Temporary Files"]
+    }
+}

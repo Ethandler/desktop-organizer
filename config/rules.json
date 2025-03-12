@@ -1,0 +1,24 @@
+[
+    {
+        "name": "Temporary Files",
+        "conditions": {
+            "name_pattern": "temp|tmp",
+            "extensions": [".tmp", ".bak", ".log"]
+        },
+        "action": {
+            "type": "move",
+            "destination": "Trash"
+        }
+    },
+    {
+        "name": "Sensitive Documents",
+        "conditions": {
+            "extensions": [".doc", ".docx", ".pdf"],
+            "name_pattern": "confidential|secret"
+        },
+        "action": {
+            "type": "encrypt",
+            "password": "secure123"
+        }
+    }
+]
